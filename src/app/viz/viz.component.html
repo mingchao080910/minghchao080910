@@ -1,0 +1,19 @@
+<div class="container">
+  <div>
+    <!-- <mat-tab-group (focusChange)="nav_to($event)" mat-align-tabs="center"> -->
+
+    <mat-tab-group
+      mat-stretch-tabs="false"
+      mat-align-tabs="center"
+      (focusChange)="change_chart_show($event)"
+    >
+      <mat-tab label="sankey"> </mat-tab>
+      <mat-tab label="parallel"> </mat-tab>
+    </mat-tab-group>
+    <app-sankey *ngIf="showSankey" [data]="filtered_data"   ></app-sankey>
+    <app-parallel *ngIf="!showSankey" [data]="filtered_data"></app-parallel>
+  </div>
+  <app-filters (filtersChange)="filters_change($event)"> </app-filters>
+</div>
+
+

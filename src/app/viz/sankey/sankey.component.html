@@ -1,0 +1,5 @@
+<div id="sankeychart"></div>
+<mat-slide-toggle [(ngModel)]="isSubTotal">
+  {{ isSubTotal ? "Total" : "Sub" }}</mat-slide-toggle
+>
+<app-list [data]="sankey_data"></app-list>

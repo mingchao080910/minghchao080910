@@ -1,0 +1,7 @@
+<div [formGroup]="fb_group" class="filters">
+  <div *ngFor="let d of item_list">
+    <mat-checkbox [formControlName]="d" (change)="filter_change()">{{
+      d
+    }}</mat-checkbox>
+  </div>
+</div>

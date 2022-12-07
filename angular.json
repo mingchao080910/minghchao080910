@@ -30,6 +30,9 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/devextreme/dist/css/dx.common.css",
+              "node_modules/devextreme/dist/css/dx.light.css",
+              "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.less"
             ],
             "scripts": []
@@ -40,7 +43,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "22mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -93,6 +96,7 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.less"
             ],
             "scripts": []
@@ -100,5 +104,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "71e3c855-11ef-4c0e-a54a-3b11d7344212"
   }
 }

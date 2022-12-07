@@ -1,0 +1,33 @@
+<div id="parallel"></div>
+
+<!-- 筛选器 -->
+
+<div [formGroup]="toppings" class="columnFilters">
+  <div *ngFor="let item of fields">
+    <mat-checkbox [formControlName]="item" (change)="fileds_change()">{{
+      item
+    }}</mat-checkbox>
+  </div>
+</div>
+<div>
+  <label for="">{{ start_year }} </label>
+  <mat-slider [min]="min_year" [max]="max_year">
+    <input
+      [(value)]="start_year"
+      step="1"
+      (valueChange)="start_end_year_change($event)"
+      matSliderStartThumb
+    />
+    <input
+      [(value)]="end_year"
+      step="1"
+      (valueChange)="start_end_year_change($event)"
+      matSliderEndThumb
+    />
+  </mat-slider>
+  <label for="">{{ end_year }} </label>
+</div>
+
+<app-list [data]="sankey_data"></app-list>
+
+

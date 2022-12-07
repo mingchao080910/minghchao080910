@@ -1,0 +1,19 @@
+<dx-data-grid
+  id="gridContainer"
+  [dataSource]="dataSource"
+  keyExpr="ID"
+  [showBorders]="true"
+>
+  <dxo-paging [pageSize]="5"> </dxo-paging>
+  <dxo-pager
+    [visible]="true"
+    [showPageSizeSelector]="true"
+    [showInfo]="true"
+    [showNavigationButtons]="true"
+  >
+  </dxo-pager>
+
+  <dxi-column dataField="ID" dataType="string"  width="100"></dxi-column>
+  <dxi-column dataField="web" dataType="string"></dxi-column>
+  <dxi-column dataField="Meeting name" dataType="string"></dxi-column>
+</dx-data-grid>

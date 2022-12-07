@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'hapticology1'`, () => {
+  it(`should have as title 'hapticology'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('hapticology1');
+    expect(app.title).toEqual('hapticology');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('hapticology1 app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('hapticology app is running!');
   });
 });

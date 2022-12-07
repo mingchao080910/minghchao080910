@@ -1,0 +1,15 @@
+<div class="content" #target>
+  <div class="menues">
+    <p
+      *ngFor="let title of titles"
+      [ngClass]="titlesObj.get(title) ? 'active' : ''"
+      (click)="menu_click(title, target)"
+    >
+      {{ title }}
+    </p>
+  </div>
+
+  <section class="home">
+    <img class="homeimg" src="assets/Search.png" alt="" />
+  </section>
+</div>

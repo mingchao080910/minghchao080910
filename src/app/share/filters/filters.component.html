@@ -1,0 +1,16 @@
+<main class="content">
+  <section *ngFor="let item of contents">
+    <h4>{{ item.key }}</h4>
+
+    <div  class="clearBtn">
+      <span> All</span>
+      <button>Clear</button>
+    </div>
+
+    <app-filter
+      (filterChange)="filter_change($event)"
+      [list]="item.values"
+      [title]="item.key"
+    ></app-filter>
+  </section>
+</main>
