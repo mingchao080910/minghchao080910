@@ -29,6 +29,22 @@ export class FilterComponent implements OnInit {
   ngOnInit(): void {}
 
   filter_change() {
-    this.filterChange.emit({ key: this.title, values:this.fb_group.value });
+    this.filterChange.emit({ key: this.title, values: this.fb_group.value });
+  }
+
+  select_all() {
+    let values = this.fb_group.value;
+    Object.keys(values).forEach((d) => {
+      this.fb_group.patchValue({ [d]: true });
+    });
+    this.filterChange.emit({ key: this.title, values: this.fb_group.value });
+  }
+
+  clear_all() {
+    let values = this.fb_group.value;
+    Object.keys(values).forEach((d) => {
+      this.fb_group.patchValue({ [d]: false });
+    });
+    this.filterChange.emit({ key: this.title, values: this.fb_group.value });
   }
 }

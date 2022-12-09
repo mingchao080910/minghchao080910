@@ -1,3 +1,12 @@
+<div class="actionBtns">
+  <div>
+    <button class="selectAllbtn" (click)="select_all()">All</button>
+  </div>
+  <div>
+    <button class="clearAllbtn" (click)="clear_all()">Clear</button>
+  </div>
+</div>
+
 <div [formGroup]="fb_group" class="filters">
   <div *ngFor="let d of item_list">
     <mat-checkbox [formControlName]="d" (change)="filter_change()">{{
