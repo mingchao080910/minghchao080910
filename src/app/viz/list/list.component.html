@@ -13,7 +13,11 @@
   >
   </dxo-pager>
 
-  <dxi-column dataField="ID" dataType="string"  width="100"></dxi-column>
-  <dxi-column dataField="web" dataType="string"></dxi-column>
+  <dxi-column dataField="ID" dataType="string" width="100"></dxi-column>
+  <dxi-column dataField="web" cellTemplate="web_temp"></dxi-column>
+
   <dxi-column dataField="Meeting name" dataType="string"></dxi-column>
+  <div *dxTemplate="let data of 'web_temp'">
+    <a (click)="nav_to_new_window(data)">{{ data.value }}</a>
+  </div>
 </dx-data-grid>

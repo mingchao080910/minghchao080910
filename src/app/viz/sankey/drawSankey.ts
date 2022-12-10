@@ -24,6 +24,8 @@ export class SankeyChart {
     'Actuating mechanism',
     'Simple to complex mechanism',
   ];
+  link: any;
+  path:any;
   isSubTotal: boolean;
   constructor(id: string, data: any, isSubTotal: boolean, orders: any) {
     this.data = data;
@@ -143,7 +145,6 @@ export class SankeyChart {
     this.render({ nodes, links });
   }
   sort_nodes(a: any, b: any) {
-
     let order =
       this.orders.findIndex((v: any) => v === a.split('~')[1]) >
       this.orders.findIndex((v: any) => v === b.split('~')[1])
@@ -226,35 +227,10 @@ export class SankeyChart {
           this.color_map.get(d.source.id.split('~')[0])(d.source.id)
         )
         .attr('stroke-width', (d: any) => Math.max(1, d.width));
-
-      link
-        .on('mouseover', (e: any, d: any) => {
-          console.log(d);
-          d3.selectAll('#mypath')
-            .transition()
-            .duration(500)
-            .attr('opacity', 0.1);
-          d3.selectAll(`.${getClassName(d.source.id.split('~')[1])}`)
-            .transition()
-            .duration(500)
-            .attr('opacity', 1);
-
-          // d.source.sourceLinks.forEach((v: any) => {
-          //   d3.selectAll(`.${getClassName(v.target.id.split('~')[1])}`).attr(
-          //     'opacity',
-          //     1
-          //   );
-          // });
-          // d.source.sourceLinks.forEach((v: any) => {
-          //   d3.selectAll(`.${getClassName(v.source.id.split('~')[1])}`).attr(
-          //     'opacity',
-          //     1
-          //   );
-          // });
-        })
-        .on('mouseout', () => {
-          d3.selectAll('#mypath').attr('opacity', 1);
-        });
+      this.path = link;
+      // .on('mouseout', () => {
+      //   d3.selectAll('#mypath').attr('opacity', 1);
+      // });
       link.append('title').text((d: any) => `${d.source.id} → ${d.target.id}}`);
     };
 
@@ -314,6 +290,6 @@ export class SankeyChart {
   }
 }
 
-function getClassName(str: string) {
+export function getClassName(str: string) {
   return str.match(/[a-zA-Z]/g)?.join('');
 }

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkhapticology1=self.webpackChunkhapticology1||[]).push([[682],{4682:(l,s,t)=>{t.r(s),t.d(s,{SearchModule:()=>a});var c=t(6895),h=t(7841),o=t(4650);class a{static#t=this.\u0275fac=function(n){return new(n||a)};static#a=this.\u0275mod=o.oAB({type:a});static#s=this.\u0275inj=o.cJS({imports:[c.ez,h.G]})}}}]);

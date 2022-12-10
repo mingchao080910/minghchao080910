@@ -1,5 +1,4 @@
 import * as d3 from 'd3';
-import * as d3Sankey from 'd3-sankey';
 
 export class Parallel {
   data: any;
@@ -19,11 +18,22 @@ export class Parallel {
   chart_area: any;
   years: any;
   orders: any;
-  constructor(id: string, data: any, fileds: string[], orders: any) {
+  update_selected_lines: any;
+  table_data: any;
+
+  path: any;
+  constructor(
+    id: string,
+    data: any,
+    fileds: string[],
+    orders: any,
+    table_data: any
+  ) {
     this.data = data;
     this.id = id;
     this.fileds = fileds;
     this.orders = orders;
+    this.table_data = table_data;
     this.set_svg();
 
     this.set_scales();
@@ -62,7 +72,7 @@ export class Parallel {
     let y_scales = new Map();
     this.fileds.forEach((d: any) => {
       let domain: string[] = this.get_distinct_arr(d);
-      y_scales.set(d, d3.scaleBand().domain(domain).range([this.innerH, 0]));
+      y_scales.set(d, d3.scalePoint().domain(domain).range([this.innerH, 0]));
     });
 
     this.y_scales = y_scales;
@@ -70,6 +80,12 @@ export class Parallel {
       .scaleBand()
       .domain(this.fileds)
       .range([0, this.innerW * 1.1]);
+
+    let x = d3
+      .scaleBand()
+      .domain(this.fileds)
+      .range([0, this.innerW * 1.1]);
+
     this.years = this.get_distinct_arr('Year');
     this.years.sort();
     this.color_scale = d3.scaleOrdinal(d3.schemeTableau10).domain(this.years);
@@ -106,38 +122,7 @@ export class Parallel {
       .attr('fill', 'none')
       .attr('stroke', (d: any) => this.color_scale(d.Year))
       .attr('stroke-width', 3);
-
-    path
-      .on('mousemove', (e: any, d: any) => {
-        d3.selectAll('.mypath')
-          .transition()
-          .duration(500)
-          .attr('opacity', 0.02);
-        d3.select(`.id${d.ID}`).transition().duration(500).attr('opacity', 1);
-        let html = () => ` <section>
-          <p><strong>ID:${d['ID']}</strong></p>
-          <p><strong>Year:${d['Year']}</strong></p>
-          <p><strong>web:${d['web']}</strong></p>
-          <p><strong>Meeting name:${d['Meeting name']}</strong></p>
-        </section> `;
-        this.tips_show(e, d, html);
-      })
-      .on('mouseout', () => {
-        d3.selectAll('.mypath').attr('opacity', 1);
-        this.tips_hide();
-      });
-  }
-
-  tips_show(e: any, d: any, html: any) {
-    d3.select('.d3-tip')
-      .style('display', 'block')
-      .style('position', 'absolute')
-      .style('top', `${e.pageY}px`)
-      .style('left', `${e.pageX}px`)
-      .html(html);
-  }
-  tips_hide() {
-    d3.select('.d3-tip').style('display', 'none');
+    this.path = path;
   }
 
   set_circles() {
@@ -208,4 +193,13 @@ export class Parallel {
 }
 function getClassName(str: string) {
   return str.match(/[a-zA-Z]/g)?.join('');
+}
+
+export function get_invert_x_dim_by(x: any, x_value: number) {
+  let eachBand = x.step();
+  let index = Math.round(x_value / eachBand);
+
+  let val = x.domain()[index];
+
+  return val;
 }

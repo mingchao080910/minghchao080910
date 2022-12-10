@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SankeyComponent } from './sankey/sankey.component';
-import { ParallelComponent } from './parallel/parallel.component';
+
 import { VizComponent } from './viz.component';
 const routes: Routes = [
   {
@@ -12,7 +11,6 @@ const routes: Routes = [
     //   { path: 'parallel', component: ParallelComponent },
     // ],
   },
-
 ];
 
 @NgModule({

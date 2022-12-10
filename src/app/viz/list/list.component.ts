@@ -11,11 +11,12 @@ import ArrayStore from 'devextreme/data/array_store';
 export class ListComponent implements OnInit {
   dataSource!: DataSource; //获取上传的数据
   @Input()
-  set data(data:any) {
+  set data(data: any) {
+     console.log("data==>",data)
     this.dataSource = new DataSource({
       store: new ArrayStore({
         key: 'ID',
-        data: data
+        data: data,
       }),
     });
   }
@@ -23,4 +24,9 @@ export class ListComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  nav_to_new_window(data: any) {
+    console.log('data==>', data);
+    window.open(data.value);
+  }
 }
