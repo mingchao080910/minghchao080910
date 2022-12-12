@@ -3,6 +3,7 @@ import { VizDataServiceService } from '../viz-data-service.service';
 import { Parallel, get_invert_x_dim_by } from './chart';
 import { FormBuilder } from '@angular/forms';
 import * as d3 from 'd3';
+import { getClassName } from '../sankey/drawSankey';
 
 @Component({
   selector: 'app-parallel',
@@ -105,7 +106,28 @@ export class ParallelComponent implements OnInit {
       .on('mouseout', (e: any, d: any) => {
         this.tips_hide();
       });
+    this.parallel.circle.on('click', (e: any, d: any) => {
+      let classname = d3.select(e.target).attr('class');
 
+      let _data = this.sankey_data.filter((item: any) => {
+        let index = Object.keys(item).findIndex(
+          (v) => getClassName(v) === classname
+        );
+        let key = Object.keys(item)[index];
+
+        return item[key] === d;
+      });
+      this.selected_lines = _data.map((d: any) => d.ID);
+      d3.selectAll('.mypath')
+        .transition()
+        .duration(500)
+        .attr('opacity', (d: any) =>
+          this.selected_lines.includes(d.ID) ? 1 : 0.02
+        );
+      this.table_data = this.sankey_data.filter((d: any) =>
+        this.selected_lines.includes(d.ID)
+      );
+    });
     // this.parallel.svg.on('click',(e:any,d:any)=>{
     //    console.log("e,d==>",
 
@@ -165,7 +187,6 @@ export class ParallelComponent implements OnInit {
       });
     };
 
-
     // this.parallel.chart_area
     //   .attr('class', 'brush')
     //   .call(d3.brush().on('brush', brushed));
@@ -184,6 +205,7 @@ export class ParallelComponent implements OnInit {
       this.selected_lines.includes(v.ID)
     );
   }
+
   lins_on_mouse_over(e: any, d: any) {
     let html = () => ` <section>
                         <p><strong>ID:${d['ID']}</strong></p>

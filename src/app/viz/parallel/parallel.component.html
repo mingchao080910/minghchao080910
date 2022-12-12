@@ -1,9 +1,11 @@
-
 <div>
-
-
-  <button mat-mini-fab color="accent" (click)="clear_table()" aria-label="Clear Selected lines highlight">
-    <mat-icon>clear_all</mat-icon>
+  <button
+    mat-mini-fab
+    color="accent"
+    (click)="clear_table()"
+    aria-label="Clear Selected lines highlight"
+  >
+    <mat-icon>autorenew</mat-icon>
   </button>
 </div>
 <div id="parallel"></div>
@@ -19,7 +21,7 @@
 </div>
 
 <!-- 年份选择器 -->
-<div>
+<div class="year_filter">
   <label for="">{{ start_year }} </label>
   <mat-slider [min]="min_year" [max]="max_year">
     <input
@@ -38,6 +40,8 @@
   <label for="">{{ end_year }} </label>
 </div>
 
-<!-- 表格数据和平行坐标系图恢复全部 -->
-
+<div>
+  <span class="boldtitle">Research List</span>
+  <span> (Automatic update based on the above visualization) </span>
+</div>
 <app-list [data]="table_data"></app-list>

@@ -25,7 +25,7 @@ export class FilterComponent implements OnInit {
       if (arr.length > 0) {
         let obj = {};
         arr.forEach((d: string) => {
-          Object.assign(obj, { [d]: true });
+          Object.assign(obj, { [d]: false });
         });
 
         this.fb_group = this.fb.group(obj);
@@ -41,7 +41,22 @@ export class FilterComponent implements OnInit {
   ngOnInit(): void {}
 
   filter_change() {
-    this.filterChange.emit({ key: this.title, values: this.fb_group.value });
+    //if all false
+
+    if (this.check_if_all_false(this.fb_group.value)) {
+      let all_true_values = this.get_all_true_form_value();
+      this.filterChange.emit({
+        key: this.title,
+        values: all_true_values,
+        is_all: true,
+      });
+    } else {
+      this.filterChange.emit({
+        key: this.title,
+        values: this.fb_group.value,
+        is_all: false,
+      });
+    }
   }
 
   select_all() {
@@ -49,19 +64,40 @@ export class FilterComponent implements OnInit {
     Object.keys(values).forEach((d) => {
       this.fb_group.patchValue({ [d]: true });
     });
-    this.filterChange.emit({ key: this.title, values: this.fb_group.value });
+    this.filterChange.emit({
+      key: this.title,
+      values: this.fb_group.value,
+      is_all: true,
+    });
   }
 
   clear_all() {
     let values = this.fb_group.value;
+
     Object.keys(values).forEach((d) => {
       this.fb_group.patchValue({ [d]: false });
     });
+
+    let all_true_values = this.get_all_true_form_value();
+    this.filterChange.emit({
+      key: this.title,
+      values: all_true_values,
+      is_all: true,
+    });
+  }
+
+  get_all_true_form_value() {
     let all_true_values = {};
     Object.entries(this.fb_group.value).map((d) => {
       Object.assign(all_true_values, { [d[0]]: true });
     });
 
-    this.filterChange.emit({ key: this.title, values: all_true_values });
+    return all_true_values;
+  }
+
+  check_if_all_false(obj: any) {
+    return !Object.entries(obj).reduce((pre: any, cur: any) => {
+      return pre || cur[1];
+    }, false);
   }
 }

@@ -5,11 +5,16 @@
     (click)="clear_table()"
     aria-label="Clear Selected lines highlight"
   >
-    <mat-icon>clear_all</mat-icon>
+    <mat-icon>autorenew</mat-icon>
   </button>
 </div>
 <div id="sankeychart"></div>
-<mat-slide-toggle [(ngModel)]="isSubTotal">
-  {{ isSubTotal ? "Total" : "Sub" }}</mat-slide-toggle
+<mat-slide-toggle [(ngModel)]="is_hightlight"  (change)="redraw_sankey()">
+  {{ is_hightlight ? "Hightlight Mode" : "Filter Mode" }}</mat-slide-toggle
 >
+
+<div>
+  <span class="boldtitle">Research List</span>
+  <span> (Automatic update based on the above visualization) </span>
+</div>
 <app-list [data]="table_data"></app-list>

@@ -1,0 +1,61 @@
+﻿order
+1.0 Encountered/free gesture
+1.0 Grounded-Off-Body
+1.0 Lateral Motion
+1.0 Off-The-Shelf Components
+1.0 Spatial Distribution
+1.0 Whole Proximate Object
+1.1 Partial Proximate Object
+1.1.1 Compliance
+1.1.2 Curvature
+1.1.3 Texture
+1.2.1 Size
+1.2.1 Size&1.3.1 Mass
+1.2.2 Shape
+1.2.2 Shape&1.3.1 Mass
+1.3.1 Mass
+1.3.3 Mass Redistribution/Damped Oscillation
+1.4  Mechanical Mechanisms
+1.5 Force/Motion
+13.0 Throwing
+2.0 Effects
+2.0 Grasped/ fixed gesture
+2.0 Grounded-On-Different-Body-Part
+2.0 Material
+2.0 Mechanical Mechanism
+2.0 Pressure
+2.0 Vibration
+2.1 Stretch On Skin
+2.3 Forces/Constraint Across Joint
+3.0 Abstracted
+3.0 Elastic Material
+3.0 Grounded-On-Same-Body-Part
+3.0 Passive
+3.0 Static Contact
+3.0 Worn/ free gesture
+4.0 Asysmetric Vibration
+4.0 Exsiting Devices
+4.0 Moving-Off-Body
+4.0 Unsupported Holding
+4.0 Unsupported Holding&5.0 Enclosure
+5.0 Electrical Muscle Stimulation
+5.0 Enclosure
+5.0 Enclosure - Grasp
+5.0 Modularization
+5.0 Ungrounded
+6.0 Function Test
+6.0 Movement Platform + Props
+7.0 Part Motion Test
+7.0 String + Brake
+8.0 Shaking
+8.0 Track + Brake
+9.0 Scanning
+9.1. Tool-Mediated
+9.2 Passive
+9.3 Touch
+9.4 Throwing
+All
+Grasp
+None
+Not Specified
+Others

@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import * as d3Sankey from 'd3-sankey';
-import dxDataGrid from 'devextreme/ui/data_grid';
+
 import fields from '../fields';
 export class SankeyChart {
   data: any;
@@ -25,13 +25,13 @@ export class SankeyChart {
     'Simple to complex mechanism',
   ];
   link: any;
-  path:any;
-  isSubTotal: boolean;
-  constructor(id: string, data: any, isSubTotal: boolean, orders: any) {
+  path: any;
+  isSubTotal!: boolean;
+  constructor(id: string, data: any,  orders: any) {
     this.data = data;
     this.orders = orders;
     this.id = id;
-    this.isSubTotal = isSubTotal;
+
     this.init_svg();
     this.get_node_links();
     this.render_scale();
@@ -74,9 +74,10 @@ export class SankeyChart {
     this.links = this.links.filter((d: any) => d.target && d.target !== ' ');
 
     // 汇总线条的数据
-    if (this.isSubTotal) {
-      this.flatRollupLinks();
-    }
+    this.flatRollupLinks();
+    // if (this.isSubTotal) {
+    //   this.flatRollupLinks();
+    // }
   }
 
   flatRollupLinks() {
@@ -115,7 +116,7 @@ export class SankeyChart {
         .nodePadding(2)
         .extent([
           [this.margin.left, this.margin.top],
-          [this.innerW - 1, this.innerH - 5],
+          [this.innerW, this.innerH],
         ])
         .nodeSort((a: any, b: any) => this.sort_nodes(a.id, b.id));
 
@@ -154,13 +155,13 @@ export class SankeyChart {
   }
   render_scale() {
     this.colors_arr = [
-      d3.interpolateBlues,
-      d3.interpolateBuGn,
-      d3.interpolatePuRd,
-      d3.interpolateBrBG,
-      d3.interpolatePuRd,
-      d3.interpolatePiYG,
-      d3.interpolateReds,
+      ['#55acae', '#d4ee9f'],
+      ['#D72104', '#FFF074'],
+      ['#447AB3', '#5758A6'],
+      ['#489CB3', '#4493B4'],
+      ['#ECF7A7', '#FAF9B0'],
+      ['#9E0142', '#EF6FA4'],
+      ['#6B6B6B', '#EF6FA4'],
     ];
 
     // this.color = d3.scaleOrdinal().domain(this.nodes).range(d3.schemeGreens[9]);
@@ -174,7 +175,12 @@ export class SankeyChart {
         d3
           .scaleOrdinal()
           .domain(domain)
-          .range(d3.quantize(this.colors_arr[i], 20))
+          .range(
+            d3.quantize(
+              d3.interpolateHcl(this.colors_arr[i][0], this.colors_arr[i][1]),
+              20
+            )
+          )
       );
     });
 
@@ -240,8 +246,8 @@ export class SankeyChart {
       let text_g = svg
         .append('g')
         .attr('font-family', 'sans-serif')
-        .attr('font-size', 7)
-        .attr('fill', '#f58518');
+        .attr('font-size', '0.7rem')
+        .attr('fill', '#000000');
       text_g
         .selectAll('text')
         .data(nodes)
@@ -255,9 +261,25 @@ export class SankeyChart {
         .text((d: any) => d.id.split('~')[1]);
     };
 
+    const add_title = () => {
+      let titles = this.svg
+        .selectAll('.mytitle')
+        .data(this.columns)
+        .join('text');
+      titles
+        .attr(
+          'x',
+          (d: any, i: number) =>
+            (this.innerW / this.columns.length) * i + this.margin.left
+        )
+        .attr('y', 30)
+        .attr('text-anchor', 'start')
+        .text((d: string) => d);
+    };
     add_rect();
     add_path();
     add_text();
+    add_title();
   }
 
   init_svg() {

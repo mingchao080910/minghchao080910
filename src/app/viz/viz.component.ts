@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import * as _ from 'lodash';
 import { VizDataServiceService } from './viz-data-service.service';
 
 @Component({
@@ -13,6 +13,7 @@ export class VizComponent implements OnInit {
   data_arr: any;
   filtered_data: any;
   filter_conditions = new Map();
+  sankey_filter_conditions = new Map();
   showSankey: boolean = true;
   constructor(private data_service: VizDataServiceService) {}
 
@@ -37,7 +38,7 @@ export class VizComponent implements OnInit {
     // 保存条件
     this.filter_conditions.set(filter_condition.key, conditons);
 
-    console.log('label==>', this.filter_conditions);
+    this.sankey_filter_conditions = _.cloneDeep(filter_condition);
     // 统一筛选条件
     this.filtered_data = this.data.filter((d: any) => {
       let result = true;

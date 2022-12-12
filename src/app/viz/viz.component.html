@@ -7,13 +7,17 @@
       mat-align-tabs="center"
       (focusChange)="change_chart_show($event)"
     >
-      <mat-tab label="sankey"> </mat-tab>
-      <mat-tab label="parallel"> </mat-tab>
+      <mat-tab label="Alluvial Diagram"> </mat-tab>
+      <mat-tab label="Parallel coordinate "> </mat-tab>
     </mat-tab-group>
-    <app-sankey *ngIf="showSankey" [data]="filtered_data"   ></app-sankey>
+    <app-sankey
+      *ngIf="showSankey"
+      [filtered_data]="filtered_data"
+      [data]="data"
+      [filter_conditions]="sankey_filter_conditions"
+    ></app-sankey>
     <app-parallel *ngIf="!showSankey" [data]="filtered_data"></app-parallel>
   </div>
+
   <app-filters (filtersChange)="filters_change($event)"> </app-filters>
 </div>
-
-

@@ -20,7 +20,7 @@ export class Parallel {
   orders: any;
   update_selected_lines: any;
   table_data: any;
-
+  circle: any;
   path: any;
   constructor(
     id: string,
@@ -37,10 +37,11 @@ export class Parallel {
     this.set_svg();
 
     this.set_scales();
-    this.set_x_g();
     this.set_lines();
     this.set_circles();
     this.add_legend();
+    this.set_title();
+    this.set_x_g();
   }
 
   set_x_g() {
@@ -88,7 +89,20 @@ export class Parallel {
 
     this.years = this.get_distinct_arr('Year');
     this.years.sort();
-    this.color_scale = d3.scaleOrdinal(d3.schemeTableau10).domain(this.years);
+    let colors = [
+      '#0C5374',
+      '#199098',
+      '#7FCAA3',
+      '#FBDDA0',
+      '#EE7470',
+      '#DA3D77',
+      '#7A226E',
+      '#E25059',
+      '#769E4E',
+      '#65A7CC',
+      '#7A226E',
+    ];
+    this.color_scale = d3.scaleOrdinal(colors).domain(this.years);
   }
 
   get_path() {
@@ -121,7 +135,7 @@ export class Parallel {
       .attr('d', get_paths)
       .attr('fill', 'none')
       .attr('stroke', (d: any) => this.color_scale(d.Year))
-      .attr('stroke-width', 3);
+      .attr('stroke-width', 1.5);
     this.path = path;
   }
 
@@ -131,19 +145,36 @@ export class Parallel {
         .selectAll(`.${getClassName(d)}`)
         .data(this.get_distinct_arr(d))
         .join('circle')
-        .attr('class', getClassName(d));
+        .attr('class', getClassName(d))
+        .attr('id', 'mycircle');
 
       let data = (row: any) => this.data.filter((v: any) => v[d] === row);
-      let size = d3.scaleLinear().range([2, 20]).domain([0, this.data.length]);
+      let size = d3.scaleLinear().range([6, 20]).domain([0, this.data.length]);
 
       circle
         .attr('cx', this.xScale(d))
         .attr('cy', (v: any) => this.y_scales.get(d)(v))
         .attr('r', (row: any) => size(data(row).length))
-        .attr('fill', 'purple');
+        .attr('fill', '#3F51B5')
+
+        .attr('fill-opacity', 0.5);
     });
+
+    this.circle = d3.selectAll('#mycircle');
   }
 
+  set_title() {
+    let titles = this.svg.selectAll('.mytitle').data(this.fileds).join('text');
+    titles
+      .attr(
+        'x',
+        (d: any, i: number) =>
+          (this.innerW / this.fileds.length) * i + this.margin.left
+      )
+      .attr('y', 30)
+      .attr('text-anchor', 'middle')
+      .text((d: string) => d);
+  }
   set_svg() {
     const div: any = d3.select(`#${this.id}`);
     div.selectAll('*').remove();
